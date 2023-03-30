@@ -1,38 +1,37 @@
 package org.iesvdm.tddjava.asserts;
 
-import org.junit.jupiter.api.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
+public class HamcrestTest {
 
-public class AssertJTest {
-
+    @Test
     void whenBooleanIsTrue() {
-        assertThat(1 == 1).isTrue();
+        assertThat(1 == 1, is(equalTo(true)));
     }
 
     @Test
     void whenBooleanIsFalse() {
         boolean flag =false;
-        assertThat(flag).isFalse();
+        assertThat(flag, is(equalTo(false)));
     }
 
     @Test
     void whenObjectIsNull() {
         Object nullObj = null;
-        assertThat(nullObj).isNull();
+        assertThat(nullObj, is(nullValue()));
 
     }
-
 
     @Test
     void whenObjectIsNotNull() {
         Object obj = new Object();
 
-        assertThat(obj).isNotNull();
+        assertThat(obj, is(not(equalTo(nullValue()))));
 
     }
 
@@ -42,7 +41,7 @@ public class AssertJTest {
         final Integer ACTUAL = 9;
         final Integer EXPECTED = 9;
 
-        assertThat(ACTUAL).isEqualTo(EXPECTED);
+        assertThat(ACTUAL, is(equalTo(EXPECTED)));
 
     }
 
@@ -51,7 +50,7 @@ public class AssertJTest {
         final Object ACTUAL = 9;
         final Object EXPECTED = ACTUAL;
 
-        assertThat(ACTUAL).isSameAs(EXPECTED);
+        assertThat(ACTUAL, is(sameInstance(EXPECTED)));
 
     }
 
@@ -60,17 +59,17 @@ public class AssertJTest {
         final Object ACTUAL = 9;
         final Object EXPECTED = ACTUAL;
 
-        assertThat(ACTUAL).isNotSameAs(new Object());
+        assertThat(ACTUAL, is(not(sameInstance(new Object()))));
 
     }
 
-
     @Test
     void shouldContainSameIntegers() {
+
         final int[] ACTUAL = new int[]{2, 5, 7};
         final int[] EXPECTED = new int[]{2, 5, 7};
 
-        assertThat(ACTUAL).containsExactly(EXPECTED);
+        assertThat(ACTUAL, is(equalTo(EXPECTED)));
 
     }
 
@@ -79,44 +78,42 @@ public class AssertJTest {
         Object first = new Object();
         Object second = new Object();
 
-        List list = Arrays.asList(first, second);
+        List<Object> list = Arrays.asList(first, second);
 
-        assertThat(list).hasSize(2);
+        assertThat(list, hasSize(2));
 
     }
 
     @Test
     void shouldNotContainAnyElement() {
 
-        List list = Arrays.asList();
+        List<Object> list = Arrays.asList();
 
-        assertThat(list).isEmpty();
+        assertThat(list, hasSize(0));
 
     }
 
     @Test
     void shouldContainCorrectElementsInGivenOrder() {
-
         Object first = new Object();
         Object second = new Object();
 
-        List list = Arrays.asList(first, second);
+        List<Object> list = Arrays.asList(first, second);
 
-        assertThat(list).containsExactlyElementsOf(Arrays.asList(first, second));
+        assertThat(list, contains(first, second));
 
     }
+
 
     @Test
     void shouldContainCorrectElementsInAnyOrder() {
         Object first = new Object();
         Object second = new Object();
 
-        List list = Arrays.asList(first, second);
-
-        List list2 = Arrays.asList(second, first);
+        List<Object> list = Arrays.asList(first, second);
 
 
-        assertThat(list).containsExactlyInAnyOrderElementsOf(list2);
+        assertThat(list, containsInAnyOrder(second, first));
 
     }
 
@@ -126,9 +123,10 @@ public class AssertJTest {
         Object first = new Object();
         Object second = new Object();
 
-        List list = Arrays.asList(first, second);
+        List<Object> list = Arrays.asList(first, second);
 
-        assertThat(list).containsOnlyOnce(first);
+        assertThat(list, hasItem(first));
+        //¿?
 
     }
 
@@ -138,9 +136,9 @@ public class AssertJTest {
         Object first = new Object();
         Object second = new Object();
 
-        List list = Arrays.asList(first, second);
+        List<Object> list = Arrays.asList(first, second);
 
-        assertThat(list).doesNotContain(new Object());
+        assertThat(list, not(hasItem(new Object())));
 
     }
 
@@ -152,7 +150,7 @@ public class AssertJTest {
         final Map<String, String> map = new HashMap<>();
         map.put(KEY, VALUE);
 
-        assertThat(map).containsKey(KEY);
+        assertThat(map, hasKey(KEY));
     }
 
     @Test
@@ -165,8 +163,7 @@ public class AssertJTest {
         final Map<String, String> map = new HashMap<>();
         map.put(KEY, VALUE);
 
-        assertThat(map).doesNotContainKeys(INCORRECT_KEY);
-
+        assertThat(map, not(hasKey(INCORRECT_KEY)));
     }
 
     @Test
@@ -179,7 +176,7 @@ public class AssertJTest {
         final Map<String, String> map = new HashMap<>();
         map.put(KEY, VALUE);
 
-        assertThat(map).containsEntry(KEY, VALUE);
+        assertThat(map, hasEntry(KEY, VALUE));
 
     }
 
@@ -193,9 +190,8 @@ public class AssertJTest {
         final Map<String, String> map = new HashMap<>();
         map.put(KEY, VALUE);
 
-        assertThat(map).doesNotContainEntry(INCORRECT_KEY, VALUE);
+        assertThat(map, not(hasEntry(INCORRECT_KEY, VALUE)));
 
     }
-
 
 }

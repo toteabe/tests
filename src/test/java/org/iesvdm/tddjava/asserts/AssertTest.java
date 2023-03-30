@@ -3,6 +3,7 @@ package org.iesvdm.tddjava.asserts;
 
 
 import org.junit.jupiter.api.Test;
+import org.testng.IObjectFactory2;
 
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class AssertTest {
     @Test
     void whenBooleanIsFalse() {
         boolean flag =false;
-        assertTrue(flag);
+        assertFalse(flag);
     }
 
     @Test
@@ -63,7 +64,7 @@ public class AssertTest {
         final Object ACTUAL = 9;
         final Object EXPECTED = ACTUAL;
 
-        assertNotSame(EXPECTED, ACTUAL);
+        assertNotSame(EXPECTED, new Object());
 
     }
 
